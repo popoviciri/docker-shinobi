@@ -1,0 +1,81 @@
+version: '3.9'
+
+services:
+
+#--------------------------------------------------------------- #
+### Shinobi
+# -------------------------------------------------------------- #
+  shinobi:
+    image: popoviciri/docker-shinobi
+    container_name: shinobi
+    restart: always
+    ports:
+      - 1337:1337
+    expose:
+      - 8080
+    environment:
+      - DB_DISABLE_INCLUDED=true
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - TZ=Europe/Amsterdam
+    env_file:
+      - shinobi.env
+    volumes:
+      - ./data/Shinobi/config:/config
+      - ./data/Shinobi/plugins:/home/Shinobi/plugins
+      - ./data/Shinobi/modules:/customAutoLoad
+      - /media/cameras:/home/Shinobi/videos
+      - /dev/shm/shinobiDockerTemp:/dev/shm/streams
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    depends_on:
+      - mariadb
+    networks:
+      - netdb
+      - webproxy
+
+#--------------------------------------------------------------- #
+### mariadb
+# -------------------------------------------------------------- #
+# mariadb
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    command:
+      - --transaction-isolation=READ-COMMITTED
+      - --binlog-format=ROW
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mariadbpass
+      - TZ=Europe/Amsterdam
+    networks:
+      - netdb
+
+# adminer
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    expose:
+      - 8080
+    environment:
+      - ADMINER_DEFAULT_SERVER=mariadb
+      - ADMINER_DESIGN='nette'
+    depends_on:
+      - mariadb
+    command: php -S 0.0.0.0:8080 -t /var/www/html
+    networks:
+      - webproxy
+      - netdb
+
+##################################################################
+
+networks:
+  webproxy:
+    name: webproxy
+  netdb:
+    name: netdb
