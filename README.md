@@ -25,8 +25,9 @@ services:
       - DB_HOST=mariadb
       - DB_PORT=3306
       - TZ=Europe/Amsterdam
-    env_file:
-      - shinobi.env
+      - DB_DATABASE=shinobidb
+      - DB_USER=shinobiuser
+      - DB_PASSWORD=shinobipass
     volumes:
       - ./data/Shinobi/config:/config
       - ./data/Shinobi/plugins:/home/Shinobi/plugins
