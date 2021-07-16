@@ -1,7 +1,8 @@
-FROM node:12-buster-slim
+FROM node:slim
 
 # ShinobiPro branch, defaults to dev
 ARG APP_BRANCH=dev
+#ARG APP_BRANCH_DEV=dashboard-v3
 
 ENV DB_USER=majesticflame \
     DB_PASSWORD='' \
@@ -85,6 +86,7 @@ RUN wget -q https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.
 WORKDIR /home/Shinobi
 
 RUN git clone -b ${APP_BRANCH}  https://bitbucket.org/ShinobiSystems/shinobi.git /home/Shinobi
+#RUN git -c user.email="email@domain" -c user.name="Merge before testing" merge origin/${APP_BRANCH_DEV}
 RUN rm -rf /home/Shinobi/plugins
 RUN rm -rf package-lock.json
 RUN cp ./Docker/pm2.yml ./
