@@ -2,7 +2,7 @@ name: dockerhub
 
 on:
   push:
-    tags: [ '202*****' ]
+    tags: [ '**' ]
 env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
