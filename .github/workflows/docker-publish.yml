@@ -1,8 +1,9 @@
 name: dockerhub
 
 on:
-  push:
-    tags: [ '**' ]
+  release:
+    types: ["published"]
+
 env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
