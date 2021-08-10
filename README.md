@@ -1,3 +1,4 @@
+[![dockerhub](https://github.com/popoviciri/docker-shinobi/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/popoviciri/docker-shinobi/actions/workflows/docker-publish.yml)
 # docker-shinobi
 based on debian-slim:
 - build from latest DEV branch: https://gitlab.com/Shinobi-Systems/Shinobi/-/tree/dev
