@@ -2,9 +2,7 @@ name: dockerhub
 
 on:
   push:
-    tags: [ '*' ]
-  release:
-    types: [ published ]
+    tags: [ '*.*.*' ]
 
 env:
   REGISTRY: docker.io
