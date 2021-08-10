@@ -2,7 +2,7 @@ name: dockerhub
 
 on:
   release:
-    types: ["published"]
+    types: [published]
 
 env:
   REGISTRY: docker.io
