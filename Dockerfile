@@ -23,11 +23,24 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir -p /home/Shinobi /config /var/lib/mysql
 
-RUN apt update -y
-RUN apt install wget curl net-tools -y
-
-RUN apt update --fix-missing
-RUN apt install -y software-properties-common \
+RUN apt update --fix-missing && apt upgrade -y
+RUN \
+    apt install -y \
+        coreutils \
+        wget \
+        curl \
+        net-tools \
+        git \
+        tar \
+        sudo \
+        xz-utils \
+        procps \
+        gnutls-bin \
+        yasm \
+        software-properties-common \
+        --no-install-recommends
+RUN \
+    apt install -y \
         libfreetype6-dev \
         libgnutls28-dev \
         libmp3lame-dev \
@@ -42,36 +55,11 @@ RUN apt install -y software-properties-common \
         librtmp-dev \
         libx264-dev \
         libx265-dev \
-        yasm \
-        --no-install-recommends
-RUN apt install -y \
-        build-essential \
-        bzip2 \
-        coreutils \
-        procps \
-        gnutls-bin \
-        nasm \
-        tar \
         x264 \
         --no-install-recommends
-RUN apt install -y \
-        ffmpeg \
-        git \
-        make \
+RUN \
+    apt install -y \
         mariadb-client \
-        g++ \
-        gcc \
-        pkg-config \
-        python3 \
-        wget \
-        tar \
-        sudo \
-        xz-utils \
-        --no-install-recommends
-RUN apt install -y \
-        mc \
-        htop \
-        nano \
         --no-install-recommends
 
 # install latest ffmpeg static build
