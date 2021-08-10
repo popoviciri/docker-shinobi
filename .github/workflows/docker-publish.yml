@@ -1,4 +1,4 @@
-name: dockerhub
+name: Docker
 
 on:
   push:
@@ -6,26 +6,29 @@ on:
   release:
     types: [ released ]
 
+
 env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  docker:
+  build:
+
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Log into Docker Hub
+      - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ github.actor }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Extract Docker metadata
@@ -35,9 +38,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
