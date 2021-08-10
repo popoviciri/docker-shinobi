@@ -1,8 +1,10 @@
 name: dockerhub
 
 on:
+  push:
+    tags: [ '*' ]
   release:
-    types: [published]
+    types: [ published ]
 
 env:
   REGISTRY: docker.io
