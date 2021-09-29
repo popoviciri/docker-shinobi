@@ -4,7 +4,6 @@ on:
   release:
     types: [ released ]
 
-
 env:
   REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
@@ -12,7 +11,7 @@ env:
 jobs:
   build:
 
-    runs-on: debian-testing
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
