@@ -63,7 +63,7 @@ RUN \
         --no-install-recommends
 
 # install latest ffmpeg static build
-RUN wget -q https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz \
+RUN curl -s -O https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz \
     && tar xpf ./ffmpeg-git-amd64-static.tar.xz -C ./ \
     && cp -f ./ffmpeg-git-*-amd64-static/ff* /usr/bin/ \
     && chmod +x /usr/bin/ff* \
