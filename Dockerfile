@@ -81,6 +81,7 @@ RUN cp ./Docker/pm2.yml ./
 
 RUN npm i npm@latest -g && \
     npm install pm2 -g && \
+    npm install mqtt -g && \
     npm install --unsafe-perm
 
 # Copy default configuration files
