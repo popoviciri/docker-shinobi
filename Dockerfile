@@ -80,9 +80,9 @@ RUN rm -rf package-lock.json
 RUN cp ./Docker/pm2.yml ./
 
 RUN npm i npm@latest -g && \
-    npm install pm2 -g && \
-    npm install mqtt -g && \
     npm install --unsafe-perm
+RUN npm install pm2 -g && \
+    npm install mqtt
 
 # Copy default configuration files
 RUN chmod -f +x /home/Shinobi/Docker/init.sh
@@ -90,7 +90,7 @@ RUN chmod -f +x /home/Shinobi/Docker/init.sh
 VOLUME ["/home/Shinobi/videos"]
 VOLUME ["/home/Shinobi/plugins"]
 VOLUME ["/config"]
-VOLUME ["/customAutoLoad"]
+VOLUME ["/home/Shinobi/customAutoLoad"]
 
 EXPOSE 8080
 
