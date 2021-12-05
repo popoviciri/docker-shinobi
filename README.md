@@ -32,7 +32,7 @@ services:
     volumes:
       - ./data/Shinobi/config:/config
       - ./data/Shinobi/plugins:/home/Shinobi/plugins
-      - ./data/Shinobi/modules:/customAutoLoad
+      - ./data/Shinobi/modules:/home/Shinobi/libs/customAutoLoad
       - /media/cameras:/home/Shinobi/videos
       - /dev/shm/shinobiDockerTemp:/dev/shm/streams
       - /etc/localtime:/etc/localtime:ro
