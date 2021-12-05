@@ -90,7 +90,7 @@ RUN chmod -f +x /home/Shinobi/Docker/init.sh
 VOLUME ["/home/Shinobi/videos"]
 VOLUME ["/home/Shinobi/plugins"]
 VOLUME ["/config"]
-VOLUME ["/home/Shinobi/customAutoLoad"]
+VOLUME ["/home/Shinobi/libs/customAutoLoad"]
 
 EXPOSE 8080
 
