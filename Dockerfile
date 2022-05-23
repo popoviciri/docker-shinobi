@@ -38,6 +38,8 @@ RUN \
         gnutls-bin \
         yasm \
         software-properties-common \
+        apt-transport-https \
+        gnupg \
         --no-install-recommends
 RUN \
     apt install -y \
@@ -63,12 +65,19 @@ RUN \
         --no-install-recommends
 
 # install latest ffmpeg static build
-RUN curl -s -O https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz \
-    && tar xpf ./ffmpeg-git-amd64-static.tar.xz -C ./ \
-    && cp -f ./ffmpeg-git-*-amd64-static/ff* /usr/bin/ \
-    && chmod +x /usr/bin/ff* \
-    && rm -f ffmpeg-git-amd64-static.tar.xz \
-    && rm -rf ./ffmpeg-git-*-amd64-static
+#RUN curl -s -O https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz \
+#    && tar xpf ./ffmpeg-git-amd64-static.tar.xz -C ./ \
+#    && cp -f ./ffmpeg-git-*-amd64-static/ff* /usr/bin/ \
+#    && chmod +x /usr/bin/ff* \
+#    && rm -f ffmpeg-git-amd64-static.tar.xz \
+#    && rm -rf ./ffmpeg-git-*-amd64-static
+
+# install ffmpeg from jellyfin
+RUN wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add - \
+    && echo "deb [arch=amd64] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | tee /etc/apt/sources.list.d/jellyfin.list \
+    && apt update \
+    && apt install --no-install-recommends --no-install-suggests -y \
+    jellyfin-ffmpeg
 
 # Assign working directory
 WORKDIR /home/Shinobi
