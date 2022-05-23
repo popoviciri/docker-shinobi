@@ -78,6 +78,7 @@ RUN wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add - \
     && apt update \
     && apt install --no-install-recommends --no-install-suggests -y \
     jellyfin-ffmpeg
+ENV PATH=$PATH:/usr/lib/jellyfin-ffmpeg
 
 # Assign working directory
 WORKDIR /home/Shinobi
